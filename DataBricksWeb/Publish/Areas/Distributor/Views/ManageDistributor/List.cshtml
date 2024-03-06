@@ -1,0 +1,176 @@
+﻿@model DataBricksWeb.Areas.Distributor.Model.DistributorModel
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #example1 {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #example1 td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #example1 tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #example1 tr:hover {
+            background-color: #ddd;
+        }
+
+        #example1 th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+
+
+
+<section class="content-header">
+    <h1>
+        Distributors List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/distributor/list">Distributor List</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Admin)
+                        {
+                            <div class="pagination pagination-sm no-margin pull-right">
+                                <input type="button" style="float:right;background-color:green;" value="+ Add Distributor" id="btnAddDistributor" class="btn btn-success" />
+                            </div>
+                        }
+
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div style="overflow: auto;">
+                            <table class="table table-bordered" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th>Distributor Name</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile Number</th>
+                                        <th>Associate Partners</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Distributors != null && Model.Distributors.Count > 0)
+                                    {
+                                        foreach (var dist in Model.Distributors)
+                                        {
+                                            <tr>
+                                                <td>@dist.FullName</td>
+                                                <td>@dist.EmailId</td>
+                                                <td>@dist.PhoneNumber</td>
+                                                <td>
+                                                    @if (Model.DistributorPartners != null && Model.DistributorPartners.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.DistributorPartners.Where(x => x.DistributorId == dist.Id).ToList())
+                                                        {
+                                                            <span>@item.PartnerName |</span>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <a href="#" class="lnkDistributorEdit" data-id="@dist.Id"> <p class="fa fa-pencil"></p></a>
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <a href="#" class="lnkDistributorDelete" data-id="@dist.Id"> <p class="fa fa-trash"></p></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6">No Data Found</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+    $("#btnAddDistributor").click(function () {
+        fnRedirecttoEdit(0);
+    });
+
+    $(document).on("click",".lnkDistributorEdit", function () {
+        fnRedirecttoEdit($(this).attr("data-id"));
+    });
+
+    $(document).on("click", ".lnkDistributorDelete", function () {
+        var id = $(this).attr("data-id");
+        Confirmation("Are you sure, you want to delete?");
+        $("#btnConfirm").unbind().click(function () {
+            window.location.href = "@Url.Action("Delete","ManageDistributor",new { area = "Distributor"})?id=" + id;
+        });
+
+    });
+
+    function fnRedirecttoEdit(id) {
+        window.location.href = "@Url.Action("Edit","ManageDistributor",new { area = "Distributor"})?id=" + id;
+    };
+</script>
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+
+    var v = document.getElementById("Distributorsnew");
+    v.className += "tabcolor";
+</script>

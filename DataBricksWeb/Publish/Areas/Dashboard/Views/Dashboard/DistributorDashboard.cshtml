@@ -1,0 +1,262 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+}
+
+<section class="content">
+
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+
+        <!-- /.box-header -->
+        @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Distributor)
+        {
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="border: 1px solid;">
+                            <div class="form-group">
+                                <br />
+                                <div class="col-md-12">
+                                    <label for="inputEmail3" style="padding-top: 5px;" class="col-sm-2 control-label">Year :</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <select class="form-control" id="slPoYear">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <option value="@DateTime.Now.AddYears(i).Year">@DateTime.Now.AddYears(i).Year</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" id="pocontainer" style="width:400px;height:400px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="border: 1px solid;">
+                            <div class="form-group">
+                                <br />
+                                <div class="col-md-12">
+                                    <label for="inputEmail3" style="padding-top: 5px;" class="col-sm-2 control-label">Year :</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <select class="form-control" id="slPocYear">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <option value="@DateTime.Now.AddYears(i).Year">@DateTime.Now.AddYears(i).Year</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group" id="poccontainer" style="width:400px;height:400px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="margin-top: 10px;">
+                        <div class="col-md-12" style="border: 1px solid;">
+                            <div class="form-group">
+                                <br />
+                                <div class="col-md-12">
+                                    <label for="inputEmail3" style="padding-top: 5px;" class="col-sm-2 control-label">Year :</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <select class="form-control" id="slLeadYear">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <option value="@DateTime.Now.AddYears(i).Year">@DateTime.Now.AddYears(i).Year</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" id="leadcontainer" style="width:400px;height:400px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px;">
+                        <div class="col-md-12" style="border: 1px solid;">
+                            <div class="form-group">
+                                <br />
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" style="padding-top: 5px;" class="col-sm-4 control-label">Year :</label>
+                                    <div class="col-sm-8" style="padding-left: 0px;">
+                                        <select class="form-control" id="slExpiryYear">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <option value="@DateTime.Now.AddYears(i)">@DateTime.Now.AddYears(i)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail3" style="padding-top: 5px;" class="col-sm-5 control-label">Month :</label>
+                                    <div class="col-sm-7" style="padding-left: 0px;">
+                                        <select class="form-control" id="slExpiryMonth">
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                            <option value="4">Apr</option>
+                                            <option value="5">May</option>
+                                            <option value="6">Jun</option>
+                                            <option value="7">Jul</option>
+                                            <option value="8">Aug</option>
+                                            <option value="9">Sep</option>
+                                            <option value="10">Oct</option>
+                                            <option value="11">Nov</option>
+                                            <option value="12">Dec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group" id="expirycontainer" style="width:400px;height:400px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/Highcharts.js"></script>
+
+
+
+
+
+<script>
+    fnFormForecast("pocontainer", "@Convert.ToInt32(Session["UserId"])", $("#slPoYear").val(), "PO","green");
+    fnFormForecast("poccontainer", "@Convert.ToInt32(Session["UserId"])", $("#slPocYear").val(), "POC","purple");
+    fnFormForecast("leadcontainer", "@Convert.ToInt32(Session["UserId"])", $("#slLeadYear").val(), "Lead","orange");
+    fnFormExpiryGrid("expirycontainer", "@Convert.ToInt32(Session["UserId"])", $("#slExpiryYear").val(), $("#slExpiryMonth").val());
+    $("#slPoYear").change(function () {
+        fnFormForecast("pocontainer", "@Convert.ToInt32(Session["UserId"])", $("#slPoYear").val(), "PO", "green");
+    });
+
+    $("#slPocYear").change(function () {
+        fnFormForecast("poccontainer", "@Convert.ToInt32(Session["UserId"])", $("#slPocYear").val(), "POC", "purple");
+    });
+
+    $("#slLeadYear").change(function () {
+        fnFormForecast("leadcontainer", "@Convert.ToInt32(Session["UserId"])", $("#slLeadYear").val(), "Lead", "orange");
+    });
+
+    $("#slExpiryYear,#slExpiryMonth").change(function () {
+        fnFormExpiryGrid("expirycontainer", "@Convert.ToInt32(Session["UserId"])", $("#slExpiryYear").val(), $("#slExpiryMonth").val());
+    });
+
+
+
+    function fnFormExpiryGrid(divid,partner, year, month) {
+        $.ajax({
+            url: "@Url.Action("GetExpiryPo", "Dashboard",new { area = "Dashboard"})?partnerid=" + partner + "&year=" + year + "&month=" + month,
+            data: {},
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#" + divid).html("");
+                $("#" + divid).html(data.HTML);
+            },
+            error: function (err) {
+
+            }
+        });
+    };
+
+    function fnFormForecast(divid,partner, year, category,colorcode) {
+        $.ajax({
+            url: "@Url.Action("GetForecast","Dashboard",new { area = "Dashboard"})?partnerid=" + partner + "&year=" + year + "&category=" + category,
+            data: {},
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#" + divid).html("");
+                fnFormChart(divid, data, category, colorcode);
+            },
+            error: function (err) {
+
+            }
+        });
+    };
+
+    function fnFormChart(divid, chartdata, category, colorcode) {
+
+        debugger;
+        var data = [];
+        if (chartdata != null && chartdata.length > 0) {
+            debugger;
+            $.each(chartdata, function (index, item) {
+                debugger;
+                data.push([item.PartnerName , parseInt(item.TotalSaleAmount)]);
+            });
+        }
+
+        debugger;
+
+        Highcharts.chart(divid, {
+            chart: {
+                type: 'column',
+                width: 400,
+                height: 400
+            },
+            title: {
+                text: category + ' Forecast'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Amount (Rs.)'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Amount <b>Rs. {point.y}</b>'
+            },
+            plotOptions: {
+                column: {
+                    color: colorcode
+                }
+            },
+            series: [{
+                name: 'Month',
+                data: eval(data),
+                dataLabels: {
+                    enabled: true,
+                    rotation: -45,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    }
+
+
+</script>

@@ -1,0 +1,240 @@
+﻿@model DataBricksWeb.Database.User
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Distributor
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/lead/list">Distributor List</a></li>
+        <li class="active">Distributor</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","ManageDistributor",new { area = "Distributor"})" enctype="multipart/form-data" id="frmDistributor">
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Distributor Name <span style="color:red;">*</span></label>
+                                <input type="hidden" name="Id" value="@Model.Id"/>
+                                <input type="text" maxlength="256" class="form-control" id="txtDistributorName" name="FullName" value="@Model.FullName"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtEmail" name="EmailId" maxlength="256" value="@Model.EmailId"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Mobile<span style="color:red;">*</span></label>
+                                <input type="number" class="form-control" id="txtMobile" name="PhoneNumber" maxlength="12" value="@Model.PhoneNumber"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Password<span style="color:red;">*</span></label>
+                                    <input type="password" class="form-control" id="txtPassword" name="Password" placeholder="Password" maxlength="128"  value="@Model.Password"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Confirm Password<span style="color:red;">*</span></label>
+                                    <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Confirm Password" maxlength="128"  value="@Model.Password"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Partners</label>
+                                <div class="form-group" style="overflow-y:auto;">
+                                    @{
+                                        List<DataBricksWeb.Database.DistributorPartner> partners = TempData["AssociatedPartners"] as List<DataBricksWeb.Database.DistributorPartner>;
+                                    }
+                                    @if (DataCache.Partners != null && DataCache.Partners.Count > 0)
+                                    {
+                                        foreach (var partner in DataCache.Partners)
+                                        {
+                                            if (partners!=null && partners.Select(x => x.PartnerId).Contains(partner.Id))
+                                            {
+                                                <input type="checkbox" checked class="chkPartner" value="@partner.Id" /><span>@partner.CompanyName</span><br />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="chkPartner" value="@partner.Id" /><span>@partner.CompanyName</span><br />
+                                            }
+
+                                        }
+                                    }
+
+                                </div>
+                                <input type="hidden" name="partnersstring" id="txtPartnerNames" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br />
+
+
+
+
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:green;border-color: green;" class="btn btn-primary" id="btnSave" value="Save" />
+                        <button type="button" onclick="pageload();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </section>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery.password-validation.js"></script>
+<script>
+    function pageload() {
+        window.location.href = "@Url.Action("List","ManageDistributor",new { area = "Distributor"})";
+    };
+    $(document).on("click", "#btnSave", function () {
+        debugger;
+        var distributor = $("#txtDistributorName").val();
+        var distributoremail = $("#txtEmail").val();
+        var distributormobile = $("#txtMobile").val();
+        var password = $("#txtPassword").val();
+        var confirmpassword = $("#txtConfirmPassword").val();
+        var isPartnerSelected = false;
+        $(".chkPartner").each(function () {
+            if ($(this).is(":checked")) {
+                isPartnerSelected = true;
+                return false;
+            }
+        });
+        if (fnIsNullorEmpty(distributor)) {
+            Warning("Please enter distributor name");
+            return false;
+        }
+        if (fnIsNullorEmpty(distributoremail)) {
+            Warning("Please enter distributor email");
+            return false;
+        }
+        if (fnIsNullorEmpty(distributormobile)) {
+            Warning("Please enter distributor mobile");
+            return false;
+        }
+        if (!isPartnerSelected) {
+            Warning("Please select partner");
+            return false;
+        }
+        else {
+            $("#txtPartnerNames").val("");
+            var partners = [];
+            $(".chkPartner").each(function () {
+                if ($(this).is(":checked")) {
+                    partners.push($(this).val());
+                }
+            });
+            $("#txtPartnerNames").val(partners.toString());
+        }
+
+        if (fnIsNullorEmpty(password)) {
+            Warning("Please enter password");
+            return false;
+        }
+        if (fnIsNullorEmpty(confirmpassword)) {
+            Warning("Please enter confirm password");
+            return false;
+        }
+        if (password != confirmpassword) {
+            Warning("Passwords are not matching");
+            return false;
+        }
+
+        var isnotvalidpwd = false;
+        $("#txtPassword").passwordValidation({ "confirmField": "#txtConfirmPassword" }, function (element, valid, match, failedCases) {
+
+            if (valid) {
+                $(element).css("border", "2px solid green");
+            }
+            if (valid && match) {
+                $("#txtConfirmPassword").css("border", "2px solid green");
+            }
+            if (!valid) {
+                $(element).css("border", "2px solid red");
+            }
+
+            if (!valid || !match) {
+                $("#txtConfirmPassword").css("border", "2px solid red");
+            }
+            if (failedCases != null && failedCases.length > 0) {
+                Alert(failedCases.join("\n"));
+            }
+            else {
+                isnotvalidpwd = true;
+            }
+
+            if (isnotvalidpwd == true) {
+                fnFormSubmit();
+            }
+        });
+    });
+
+    function fnFormSubmit() {
+        Confirmation("Are you sure, you want to save?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#frmDistributor").submit();
+        });
+    };
+
+</script>
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+    var v = document.getElementById("Distributorsnew");
+    v.className += "tabcolor";
+</script>
+

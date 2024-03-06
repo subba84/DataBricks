@@ -1,0 +1,110 @@
+﻿@model List<DataBricksWeb.Database.ActivityLog>
+@{
+    ViewBag.Title = "List";
+}
+
+
+<style>
+    #example1 th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #3c8dbc;
+        color: white;
+    }
+    </style>
+
+
+<section class="content-header">
+    <h1>
+        Activities List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Activity List</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>User Name</th>
+                                    <th>Role Name</th>
+                                    <th>Activity Category</th>
+                                    <th>Activity Details</th>
+                                    <th>Activity Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+                                    foreach (var activity in Model)
+                                    {
+                                        <tr>
+                                            <td>@activity.CompanyName</td>
+                                            <td>@activity.FullName</td>
+                                            <td>@activity.RoleName</td>
+                                            <td>@activity.ActivityCategory</td>
+                                            <td>@activity.ActivityDetails</td>
+                                            <td>@activity.CreatedOn.ToAppFormat()</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">No Data Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    </div>
+    <script src="~/NewAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+        
+        var v = document.getElementById("Activitiesnew");
+        v.className += "tabcolor";
+    </script>
+

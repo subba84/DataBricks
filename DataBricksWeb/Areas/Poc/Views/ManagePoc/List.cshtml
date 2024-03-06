@@ -1,0 +1,215 @@
+﻿@model DataBricksWeb.Areas.Poc.Model.PocModel
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #tblPo {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblPo td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblPo tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblPo tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblPo th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+
+
+
+<section class="content-header">
+    <h1>
+        Poc List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="poc/list">Poc List</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Partner || Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Sales)
+                        {
+                            <div class="pagination pagination-sm no-margin pull-right">
+                                <input type="button" style="float:right;background-color:green;" value="+ Add Poc" id="btnAddPoc" class="btn btn-success" />
+                            </div>
+                        }
+
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" style="overflow:auto;">
+                        <table class="table table-bordered" id="tblPo">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Product Name</th>
+                                    <th>Date</th>
+                                    <th>Domain Name</th>
+                                    <th>Public Ip</th>                                   
+                                    <th>Convert to PO</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Pocs != null && Model.Pocs.Count > 0)
+                                {
+                                    foreach (var poc in Model.Pocs)
+                                    {
+                                        <tr>
+                                            <td>@poc.CustomerName</td>
+                                            <td>@poc.ProductName</td>
+                                            <td>@poc.POCDate</td>
+                                            <td>@poc.QualifiedDomainName</td>
+                                            <td>@poc.PublicIp</td>                                            
+                                            <td style="text-align:center;">
+                                                @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Technical)
+                                                {
+                                                    // Do if Technical
+                                                }
+                                                else
+                                                {
+                                                    if (poc.IsConvertedtoPo == true)
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (poc.Status == Statusses.Approved)
+                                                        {
+                                                            @*<a href="#" class="lnkPoConvert" data-id="@poc.Id"><p class="fa fa-file"></p></a>*@
+                                                            <input type="button" value="Convert to Po" class="lnkPoConvert" data-id="@poc.Id" style="background-color: #3c8dbc;color:white;padding: 3px 12px;border: 1px solid transparent;border-radius: 3px;">
+                                                        }
+
+
+                                                    }
+                                                }
+                                            </td>
+                                            <td style="text-align:center;">
+                                                @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Technical)
+                                                {
+                                                    <a href="#" class="lnkPocEdit" data-isapproved="@poc.Status" data-isconvertedtopo="@poc.IsConvertedtoPo" data-id="@poc.Id"><p class="fa fa-eye"></p></a>
+                                                }
+                                                else
+                                                {
+                                                    if (poc.IsConvertedtoPo == true)
+                                                    {
+                                                        <a href="#" class="lnkPocEdit" data-isapproved="@poc.Status" data-isconvertedtopo="@poc.IsConvertedtoPo" data-id="@poc.Id"><p class="fa fa-eye"></p></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="#" class="lnkPocEdit" data-isapproved="@poc.Status" data-isconvertedtopo="@poc.IsConvertedtoPo" data-id="@poc.Id"><p class="fa fa-eye"></p></a>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="11">No Data Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+    $("#btnAddPoc").click(function () {
+        window.location.href = "@Url.Action("Edit","ManagePoc",new { area = "Poc"})?id=" + 0;
+    });
+
+    $(document).on("click", ".lnkPoConvert", function () {
+        window.location.href = "@Url.Action("Edit","ManagePo",new { area = "Po"})?id=" + 0 + "&pocid=" + $(this).attr("data-id");
+    });
+
+    $(document).on("click",".lnkPocEdit",function () {
+        fnRedirecttoEdit($(this).attr("data-id"),$(this).attr("data-isapproved"),$(this).attr("data-isconvertedtopo"));
+    });
+
+    function fnRedirecttoEdit(id,status,convertedtopo) {
+        if("@Convert.ToInt32(Session["RoleId"])" == "@UserRoleIds.Technical")
+        {
+            window.location.href = "@Url.Action("Details","ManagePoc",new { area = "Poc"})?id=" + id;
+        }
+        else
+        {
+            if (status == "@Statusses.Approved" || convertedtopo == "True") {
+                window.location.href = "@Url.Action("Details","ManagePoc",new { area = "Poc"})?id=" + id;
+            }
+            else if (status == "@Statusses.Rejected") {
+                window.location.href = "@Url.Action("Edit","ManagePoc",new { area = "Poc"})?id=" + id;
+            }
+            else {
+                window.location.href = "@Url.Action("Details","ManagePoc",new { area = "Poc"})?id=" + id;
+            }
+        }
+    };
+    </script>
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+        
+        var v = document.getElementById("pocnew");
+        v.className += "tabcolor";
+    </script>
+

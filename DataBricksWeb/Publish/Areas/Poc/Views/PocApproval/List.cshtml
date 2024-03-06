@@ -1,0 +1,151 @@
+﻿@model DataBricksWeb.Areas.Poc.Model.PocModel
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #tblPo {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblPo td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblPo tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblPo tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblPo th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+
+
+
+
+<section class="content-header">
+    <h1>
+        Poc List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="pocapproval/list">Poc List</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-bordered" id="tblPo">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Product Name</th>
+                                    <th>Date</th>
+                                    <th>Domain Name</th>
+                                    <th>Public Ip</th>                                   
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Pocs != null && Model.Pocs.Count > 0)
+                                {
+                                    foreach (var poc in Model.Pocs)
+                                    {
+                                        <tr>
+                                            <td>@poc.CustomerName</td>
+                                            <td>@poc.ProductName</td>
+                                            <td>@poc.POCDate</td>
+                                            <td>@poc.QualifiedDomainName</td>
+                                            <td>@poc.PublicIp</td>                                           
+                                            <td style="text-align:center;">
+                                                <a href="#" class="lnkPocEdit" data-id="@poc.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="11">No Data Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+    </div>
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+
+
+    $(document).on("click",".lnkPocEdit",function () {
+        fnRedirecttoEdit($(this).attr("data-id"));
+    });
+
+    function fnRedirecttoEdit(id) {
+         window.location.href = "@Url.Action("Edit","PocApproval",new { area = "Poc"})?id=" + id;
+    };
+    </script>
+    <script src="~/NewAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+
+        var v = document.getElementById("POCApprovalsnew");
+        v.className += "tabcolor";
+    </script>

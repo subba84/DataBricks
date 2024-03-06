@@ -1,0 +1,40 @@
+﻿@model List<DataBricksWeb.Areas.Report.Data.AdminReportModel>
+
+<table id="tblAdminReport" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>S.No.</th>
+            <th>Partner</th>
+            <th>Customer</th>
+            <th>Modules</th>
+            <th>Order Amount</th>
+            <th>Download PO</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            int i = 1;
+            foreach (var po in Model)
+            {
+                <tr>
+                    <td style="text-align:center;">@i</td>
+                    <td>@po.PartnerName</td>
+                    <td>@po.CustomerName</td>
+                    <td>@po.ModuleNames</td>
+                    <td>@po.OrderAmount</td>
+                    <td style="text-align:center;">
+                        <a  href="/common/downloadfile?id=@po.PoId&category=@FileCategory.PO" class="lnkDownloadPo" data-poid="@po.PoId"> <i  class="fa fa-download" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No Data Found</td>
+            </tr>
+        }
+    </tbody>
+</table>

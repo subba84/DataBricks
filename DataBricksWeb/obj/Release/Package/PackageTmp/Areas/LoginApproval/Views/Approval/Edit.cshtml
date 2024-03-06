@@ -1,0 +1,241 @@
+﻿@model DataBricksWeb.Database.User
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="content-header">
+    <h1>
+        User
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/approval/list">Approvals List</a></li>
+        <li class="active">User</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-default">
+        <!-- /.box-header -->
+        <form method="post" action="@Url.Action("Edit","Approval",new { area = "LoginApproval"})" enctype="multipart/form-data" id="frmUser">
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Your Company<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.CompanyName</span>
+                                <input type="hidden" name="Id" value="@Model.Id" />
+                                <input type="hidden" name="IsApproved" id="hdnApproveFlag" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Your Name<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.FullName</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Phone<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.PhoneNumber</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>GST Number<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.GSTNumber</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Role<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.RoleName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Country<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.CountryName</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>City<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.CityName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Address<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.FullAddress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email Id<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.EmailId</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Alternate Person<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.AlternatePerson</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Alternate Contact<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.AlternateContact</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Service area , Branch Office<span style="color:red;">*</span></label>
+                            <div>
+                                <span>@Model.ServiceAreaDescription</span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                        <div class="form-group">
+                            <label>Upload Business Card</label>
+                            <div>
+                                <a href="@Url.Action("DownloadFile","ManageCommon",new { area = "Common"})?id=@Model.BusinessCard.Id&category=@FileCategory.BusinessCard">@Model.BusinessCard.FileName</a>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+
+            </div>
+
+
+            <div class="box-footer">
+                <div class="col-lg-12 p-t-20 text-center">
+                    <input type="button" style="background-color:#276235;border-color: #276235;" class="btn btn-primary" id="btnApprove" value="Approve" />
+                    <input type="button" onclick="pageloade();" class="btn btn-danger" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" id="btnReject" value="Reject" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+@*<form method="post" action="@Url.Action("Edit","Approval",new { area = "LoginApproval"})" enctype="multipart/form-data" id="frmUser">
+    <div class="row">
+        <div class="col-lg-6">
+            <label>Your Company <span style="color:red;">*</span></label>
+            <span>@Model.CompanyName</span>
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="IsApproved" id="hdnApproveFlag" />
+        </div>
+        <div class="col-lg-6">
+            <label>Your Name<span style="color:red;">*</span></label>
+            <span>@Model.FullName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label>Phone<span style="color:red;">*</span></label>
+            <span>@Model.PhoneNumber</span>
+        </div>
+        <div class="col-lg-6">
+            <label>Role<span style="color:red;">*</span></label>
+            <span>@Model.RoleName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <label>Country<span style="color:red;">*</span></label>
+            <span>@Model.CountryName</span>
+        </div>
+        <div class="col-lg-6">
+            <label>City<span style="color:red;">*</span></label>
+            <span>@Model.CityName</span>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6">
+            <label>Address<span style="color:red;">*</span></label>
+            <span>@Model.FullAddress</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <label>Email Id<span style="color:red;">*</span></label>
+            <span>@Model.EmailId</span>
+        </div>
+    </div>
+
+
+    <div align="center">
+        <input type="button" class="btn btn-success" id="btnApprove" value="Approve" />
+        <input type="button" class="btn btn-danger" id="btnReject" value="Reject" />
+    </div>
+</form>*@
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+    $("#btnApprove").click(function () {
+        Confirmation("Are you sure, you want to approve?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#hdnApproveFlag").val(true);
+            $("#frmUser").submit();
+        });
+    });
+
+    $("#btnReject").click(function () {
+        Confirmation("Are you sure, you want to reject?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#hdnApproveFlag").val(false);
+            $("#frmUser").submit();
+        });
+    });
+
+    var v = document.getElementById("LoginApprovalsnew");
+    v.className += "tabcolor";
+</script>

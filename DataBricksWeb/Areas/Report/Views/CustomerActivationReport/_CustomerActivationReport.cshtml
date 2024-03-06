@@ -1,0 +1,38 @@
+﻿@model List<DataBricksWeb.Database.CustomerActivationLog>
+
+<table id="tblAdminReport" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>S.No.</th>
+            <th>Customer</th>
+            <th>Partner</th>
+            <th>Distributor</th>
+            <th>Activation Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.PartnerName</td>
+                    <td>@item.DistributorName</td>
+                    <td>@item.ActivationDate.ToAppDateTimeFormat()</td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No Data Found</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/NewAdmin/bower_components/jquery/dist/jquery.min.js"></script>

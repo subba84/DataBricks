@@ -1,0 +1,165 @@
+﻿@model List<DataBricksWeb.Database.ActivityLog>
+@{
+    ViewBag.Title = "List";
+}
+<style>
+    #tblAdminReport {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblAdminReport td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblAdminReport tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblAdminReport tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblAdminReport th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+<section class="content-header">
+    <h1>
+        Admin Report
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Admin Report</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Partner </label>
+                    <select class="form-control" id="slPartner" name="">
+                        <option value="0">--Select--</option>
+                        @if (DataCache.Partners != null && DataCache.Partners.Count > 0)
+                        {
+                            foreach (var partner in DataCache.Partners)
+                            {
+                                <option value="@partner.Id">@partner.CompanyName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Customer </label>
+                    <select class="form-control" id="slCustomer" name="">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="button" style="margin-top: 23px;" class="btn btn-success" value="Go" id="btnGo" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div style="overflow: auto;">
+                        <div class="box-body" id="divReportBody">
+
+                        </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                    </div>
+
+                </div>
+
+        </div>
+
+
+    </section>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/NewAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $("#slPartner").change(function () {
+        $("#slCustomer").html("");
+        $.getJSON("@Url.Action("GetCustomersbasedonPartner","ManageCommon",new { area = "Common"})?partnerid=" + $(this).val(), function (data) {
+            var optionHTML = '<option value="0">--Select--</option>';
+            $.each(data, function (index, item) {
+                optionHTML+= '<option value="'+item.Id+'">'+item.CustomerName+'</option>';
+            });
+            $("#slCustomer").html(optionHTML);
+        });
+    });
+
+    $("#btnGo").click(function () {
+        fnFormReport($("#slPartner").val(), $("#slCustomer").val());
+    });
+
+
+
+     function fnFormReport(partnerid,customerid) {
+         $.ajax({
+             url: "@Url.Action("GetAdminReport", "AdminReport",new { area = "Report"})?partnerid=" + partnerid + "&customerid=" + customerid,
+            data: {},
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#divReportBody").html("");
+                $("#divReportBody").html(data.HTML);
+                $('#tblAdminReport').DataTable({
+                    'paging': true,
+                    'lengthChange': true,
+                    'searching': true,
+                    'ordering': true,
+                    'info': true,
+                    'autoWidth': true
+                })
+            },
+            error: function (err) {
+
+            }
+        });
+    };
+</script>
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+
+    var v = document.getElementById("AdminReportnew");
+    v.className += "tabcolor";
+</script>
+

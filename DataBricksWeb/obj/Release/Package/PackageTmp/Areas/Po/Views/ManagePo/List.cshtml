@@ -1,0 +1,166 @@
+﻿@model DataBricksWeb.Areas.Po.Data.PoModel
+@{
+    ViewBag.Title = "List";
+}
+
+
+<style>
+    #tblPo {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblPo td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblPo tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblPo tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblPo th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+
+
+<section class="content-header">
+    <h1>
+        Po List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/po/list">Po</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-bordered" id="tblPo">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Product Name</th>
+                                    <th>Date</th>
+                                    <th>Domain Name</th>
+                                    <th>Public Ip</th>                                    
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Pos != null && Model.Pos.Count > 0)
+                                {
+                                    foreach (var po in Model.Pos)
+                                    {
+                                        <tr>
+                                            <td>@po.CustomerName</td>
+                                            <td>@po.ProductName</td>
+                                            <td>@po.PODate</td>
+                                            <td>@po.QualifiedDomainName</td>
+                                            <td>@po.PublicIp</td>                                           
+                                            <td style="text-align: center;">
+                                                @if (Convert.ToInt32(Session["RoleId"]) == UserRoleIds.Technical)
+                                                {
+                                                    <a href="#" class="lnkPoEdit" data-id="@po.Id"><p class="fa fa-eye"></p></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" class="lnkPoEdit" data-id="@po.Id"><p class="fa fa-eye"></p></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="10">No Data Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    </div>
+
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+    $("#btnAddPo").click(function () {
+        fnRedirecttoEdit(0);
+    });
+
+    $(document).on("click",".lnkPoEdit",function () {
+        fnRedirecttoEdit($(this).attr("data-id"));
+    });
+
+    function fnRedirecttoEdit(id) {
+        window.location.href = "@Url.Action("Details", "ManagePo", new { area = "Po"})?id=" + id;
+        @*if("@Convert.ToInt32(Session["RoleId"])" == "@UserRoleIds.Technical")
+        {
+            window.location.href = "@Url.Action("Details", "ManagePo", new { area = "Po"})?id=" + id;
+        }
+        else
+        {
+            window.location.href = "@Url.Action("Edit", "ManagePo", new { area = "Po"})?id=" + id;
+        }*@
+    };
+    </script>
+
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+
+        var v = document.getElementById("posnew");
+        v.className += "tabcolor";
+    </script>

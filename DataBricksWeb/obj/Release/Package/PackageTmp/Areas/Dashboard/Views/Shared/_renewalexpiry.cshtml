@@ -1,0 +1,85 @@
+﻿@model List<DataBricksWeb.Database.Licensing>
+
+<style>
+    #tblPo {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblPo td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblPo tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblPo tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblPo th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+<div style="text-align:center;">
+<span><u style="font-size: 25px;">Renewal POs</u></span>
+    </div>
+<div class="box-body">
+    <div style="width: 100%;overflow:auto;height: 353px;">
+        <table class="table table-bordered"  id="tblPo">
+            <thead>
+                <tr>
+                    <th>Partner</th>
+                    <th>Customer Name</th>
+                    <th>Module Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var po in Model)
+                    {
+                        <tr>
+                            <td>@po.PartnerName</td>
+                            <td>@po.CustomerName</td>
+                            <td>@po.ModuleName</td>
+                            <td>@po.FromDate.ToAppFormat()</td>
+                            <td>@po.ToDate.ToAppFormat()</td>
+                            <td>
+                                <a href="#" class="lnkPoEdit" data-id="@po.PoId"><p class="fa fa-eye"></p></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">No Data Found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).on("click",".lnkPoEdit",function () {
+        fnRedirecttoEdit($(this).attr("data-id"));
+    });
+
+    function fnRedirecttoEdit(id) {
+        window.location.href = "@Url.Action("Details", "ManagePo", new { area = "Po"})?id=" + id;        
+    };
+</script>

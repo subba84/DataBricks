@@ -1,0 +1,163 @@
+﻿@model DataBricksWeb.Database.Document
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Document
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/document/list">Documents List</a></li>
+        <li><a href="#">Document</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","Document",new { area = "UploadDownload"})" enctype="multipart/form-data" id="frmDoc">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload Document <span style="color:red;">*</span></label>
+                                <input type="file" class="form-control" name="doc" accept="*" id="flDoc" />
+                                <input type="hidden" value="@Model.Id" name="Id" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group col-md-6">
+                                <label>Document Type</label>
+                                <div class="form-group">
+                                    <input type="radio" name="DocumentType" id="rdbGlobal" checked /><span>Global</span>
+                                    <input type="radio" name="DocumentType" id="rdbVersion" /><span>Version</span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Version<span style="color:red;">*</span></label>
+
+                                <input type="number" class="form-control" id="txtVersion" name="Version" placeholder="Version" value="@Model.Version" />
+                                <select class="form-control" name="Version" id="slVersion" style="display:none">
+                                    @if (DataCache.Versions != null && DataCache.Versions.Count > 0)
+                                    {
+                                        foreach (var version in DataCache.Versions)
+                                        {
+                                            <option value="@version">@version</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Notes<span style="color:red;">*</span></label>
+                            <textarea class="form-control" id="txtNotes" placeholder="Notes" maxlength="512" name="Notes">@Model.Notes</textarea>
+                        </div>
+                        <div class="col-md-6" style="display:none">
+                            <label>IsActive</label>
+                            <input type="checkbox" value="true" name="IsActive" checked />
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:green;border-color: green;" class="btn btn-primary" id="btnSave" value="Save" />
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+</script>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+    function pageloade() {
+        window.location = "/doc/list";
+    }
+
+    $("#rdbGlobal").click(function () {
+        $("#txtVersion").val("");
+        $("#slVersion").hide();
+        $("#slVersion").removeAttr("name");
+        $("#txtVersion").attr("name", "Version");
+        $("#txtVersion").show();
+    });
+
+    $("#rdbVersion").click(function () {
+
+        $("#txtVersion").val("");
+        $("#txtVersion").removeAttr("name");
+        $("#slVersion").attr("name", "Version");
+        $("#slVersion").show();
+        $("#txtVersion").hide();
+    });
+
+    $("#btnSave").click(function () {
+        var file = $("#flDoc").val();
+        var version = $("#txtVersion").val();
+        if ($("#rdbVersion").is(":checked")) {
+            version = $("#slVersion").val();
+        }
+        var notes = $("#txtNotes").val();
+
+        if (file.length == "0" || file == "") {
+            Warning("Please upload file");
+            return false;
+        }
+        if (fnIsNullorEmpty(version)) {
+            Warning("Please enter version");
+            return false;
+        }
+
+        if (fnIsNullorEmpty(notes)) {
+            Warning("Please enter notes");
+            return false;
+        }
+
+        Confirmation("Are you sure, you want to save?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#frmDoc").submit();
+        });
+    });
+
+    var v = document.getElementById("Documentsnew");
+    v.className += "tabcolor";
+</script>
+

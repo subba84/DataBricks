@@ -1,0 +1,325 @@
+﻿@model DataBricksWeb.Areas.Po.Data.PoModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    #tblModule {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblModule td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblModule tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblModule tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblModule th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+    </style>
+
+
+
+<section class="content-header">
+    <h1>
+        Po
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">Po</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","ManagePo",new { area = "Po"})" enctype="multipart/form-data" id="frmPo">
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Customer :</label>
+                                <div>
+                                    <span>@Model.Po.CustomerName</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Date<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.PODate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>POC Id :</label>
+                                <div>
+                                    <span>@Model.Po.PocId</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Partner :</label>
+                                <div>
+                                    <span>@Model.Po.PartnerName</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Product Name<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.ProductName</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Qualified Domain Name<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.QualifiedDomainName</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Public IP<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.PublicIp</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <div>
+                                    <span>@Model.Po.PODescription</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Uploaded POs</label>
+                                <div>
+                                    @if (Model.Po.PoAttachments != null && Model.Po.PoAttachments.Count > 0)
+                                    {
+                                        foreach (var fl in Model.Po.PoAttachments)
+                                        {
+                                            <a href="@Url.Action("DownloadFile","ManageCommon",new { area = "Common"})?id=@fl.Id&category=@FileCategory.PO" target="_blank">@fl.FileName</a><br />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                    <br />
+
+                  
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 style="color:black;font-weight: bold;">Technical Contact Person 1</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonNameOne</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonEmailOne</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Phone<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonPhoneOne</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 style="color:black;font-weight: bold;">Technical Contact Person 2</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Name<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonNameTwo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonEmailTwo</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Phone<span style="color:red;">*</span></label>
+                                <div>
+                                    <span>@Model.Po.TechContPersonPhoneTwo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-bordered table-responsive" id="tblModule">
+                                <thead>
+                                    <tr>
+                                        <th>Module</th>
+                                        <th>Count</th>
+                                        @if (Convert.ToInt32(Session["RoleId"]) != UserRoleIds.Technical)
+                                        {
+                                            <th>Amount</th>
+                                        }
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model.PoModules != null && Model.PoModules.Count > 0)
+                                    {
+                                        int i = 0;
+                                        foreach (var module in Model.PoModules)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @module.ModuleName
+                                                </td>
+                                                <td>
+                                                    @module.ModuleCount
+                                                </td>
+                                                @if (Convert.ToInt32(Session["RoleId"]) != UserRoleIds.Technical)
+                                                {
+                                                    <td>@module.ModuleAmount</td>
+                                                }
+                                                <td>@module.FromDate.ToAppFormat()</td>
+                                                <td>@module.ToDate.ToAppFormat()</td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </section>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+
+        function pageloade() {
+            window.location = "/po/list";
+        }
+
+    </script>
+
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+        var v = document.getElementById("posnew");
+        v.className += "tabcolor";
+    </script>

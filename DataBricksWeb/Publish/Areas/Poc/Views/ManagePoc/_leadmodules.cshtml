@@ -1,0 +1,58 @@
+﻿@model List<DataBricksWeb.Database.LeadModule>
+
+    <table class="table table-bordered table-responsive" id="tblModule">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Count</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                int i = 0;
+                foreach (var module in Model)
+                {
+                    <tr>
+                        <td>
+                            <select class="slModule form-control validate" data-errmsg="please select module name" id="slModule_@i" name="Model[@i].ModuleId">
+                                <option value="0">--Select--</option>
+                                @if (DataCache.Modules != null && DataCache.Modules.Count() > 0)
+                                {
+                                    foreach (var item in DataCache.Modules)
+                                    {
+                                        if (item.Id == module.ModuleId)
+                                        {
+                                            <option value="@item.Id" selected>@item.ModuleName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.ModuleName</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control validate" data-errmsg="please enter module count" value="@module.ModuleCount" name="Model[@i].ModuleCount" />
+                            <input type="hidden" class="hdnIsActive" value="true" name="Model[@i].IsActive" />
+                            <input type="hidden" name="Model[@i].Id" value="@module.Id" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtFromDate" data-errmsg="please enter module from date" name="Model[@i].FromDate" value="@module.FromDate.ToAppFormat()" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control txtToDate" data-errmsg="please enter module to date" name="Model[@i].ToDate" value="@module.ToDate.ToAppFormat()" />
+                        </td>
+                        <td style="text-align:center">
+                            <label class="label btnDeleteModule" style="color:red;">X</label>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>

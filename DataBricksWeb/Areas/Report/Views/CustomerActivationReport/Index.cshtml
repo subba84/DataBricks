@@ -1,0 +1,168 @@
+﻿@model List<DataBricksWeb.Database.CustomerActivationLog>
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #tblAdminReport {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblAdminReport td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblAdminReport tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblAdminReport tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblAdminReport th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+<section class="content-header">
+    <h1>
+        Customer Activation Report
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Customer Activation Report</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<div id="tablehide" style="display:none;">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Customer </label>
+                    <select class="form-control" id="slCustomer" name="">
+                        <option value="0">--Select--</option>
+                        @if (DataCache.Customers != null && DataCache.Customers.Count > 0)
+                        {
+                            foreach (var customer in DataCache.Customers)
+                            {
+                                <option value="@customer.Id">@customer.CustomerName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>From Date </label>
+                    <input type="text" id="txtFromDate" class="form-control date" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>To Date </label>
+                    <input type="text" id="txtToDate" class="form-control date" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="button" style="margin-top: 23px;" class="btn btn-success" value="Go" id="btnGo" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body" id="divReportBody">
+
+                    </div>
+                    <!-- /.box-body -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/Jquery.ui.min.js"></script>
+<script>
+
+
+    $("#btnGo").click(function () {
+        fnFormReport($("#slCustomer").val(), $("#txtFromDate").val(), $("#txtToDate").val());
+    });
+
+    $(document).on("focusin", ".date", function () {
+        $(this).datepicker({ autoclose: true, dateFormat: "dd-mm-yy" });
+    });
+
+  
+
+
+    function fnFormReport(customerid, fromdate, todate) {
+        debugger;
+         $.ajax({
+             url: "@Url.Action("GetCustomerActivationReport", "CustomerActivationReport", new { area = "Report"})?customerid=" + customerid + "&fromdate=" + fromdate + "&todate=" + todate,
+            data: {},
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#divReportBody").html("");
+                $("#divReportBody").html(data.HTML);
+                $(function () {
+                    $('#tblAdminReport').DataTable({
+                        'paging': true,
+                        'lengthChange': true,
+                        'searching': true,
+                        'ordering': true,
+                        'info': true,
+                        'autoWidth': true
+                    })
+                })
+            },
+            error: function (err) {
+
+            }
+        });
+    };
+</script>
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+    var v = document.getElementById("ActivationReportnew");
+    v.className += "tabcolor";
+</script>
+

@@ -1,0 +1,348 @@
+﻿@model DataBricksWeb.Database.Lead
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<style>
+    #tblModule {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tblModule td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tblModule tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tblModule tr:hover {
+            background-color: #ddd;
+        }
+
+        #tblModule th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3c8dbc;
+            color: white;
+        }
+</style>
+
+
+<section class="content-header">
+    <h1>
+        Lead
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/lead/list">Lead List</a></li>
+        <li class="active">Lead</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","LeadManage",new { area = "Lead"})" enctype="multipart/form-data" id="frmLead">
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Customer Name <span style="color:red;">*</span></label>
+                                <select class="form-control" id="slCustomer" name="CustomerId">
+                                    <option value="0">--Select--</option>
+                                    @if (DataCache.Customers != null && DataCache.Customers.Count > 0)
+                                    {
+                                        foreach (var customer in DataCache.Customers.Where(x => x.CreatedBy == Convert.ToInt32(Session["UserId"])).ToList())
+                                        {
+                                            if (customer.Id == Model.CustomerId)
+                                            {
+                                                <option value="@customer.Id" selected>@customer.CustomerName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@customer.Id">@customer.CustomerName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <input type="hidden" value="@Model.Id" name="Id" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtCustomerDate" readonly name="CustomerDate" value="@(string.IsNullOrEmpty(Model.CustomerDate) ? DateTime.Now.ToAppFormat() : Model.CustomerDate)" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product<span style="color:red;">*</span></label>
+                                <select class="form-control" id="slProduct" name="ProductId">
+                                    <option value="0">--Select--</option>
+                                    @if (DataCache.Products != null && DataCache.Products.Count > 0)
+                                    {
+                                        foreach (var product in DataCache.Products)
+                                        {
+                                            if (product.Id == Model.ProductId)
+                                            {
+                                                <option value="@product.Id" selected>@product.ProductName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@product.Id">@product.ProductName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" style="display:none;">
+                                <label>IsActive</label>
+                                <input type="checkbox" value="true" checked name="IsActive" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Lead Description</label>
+                                <textarea class="form-control" rows="3" name="LeadDescription">@Model.LeadDescription</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-body">
+                                <table class="table table-bordered table-responsive" id="tblModule">
+                                    <thead>
+                                        <tr>
+                                            <th>Module</th>
+                                            <th>Count</th>
+                                            @*<th>From Date</th>
+                    <th>To Date</th>*@
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            List<DataBricksWeb.Database.LeadModule> modules = Model.LeadModules;
+                                        }
+                                        @if (modules != null && modules.Count > 0)
+                                        {
+                                            int i = 0;
+                                            foreach (var module in modules)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <select class="slModule form-control validate" data-errmsg="please select module name" id="slModule_@i" name="LeadModules[@i].ModuleId">
+                                                            <option value="0">--Select--</option>
+                                                            @if (DataCache.Modules.Where(x => x.ProductId == Model.ProductId) != null && DataCache.Modules.Where(x => x.ProductId == Model.ProductId).Count() > 0)
+                                                            {
+                                                                foreach (var item in DataCache.Modules.Where(x => x.ProductId == Model.ProductId).ToList())
+                                                                {
+                                                                    if (item.Id == module.ModuleId)
+                                                                    {
+                                                                        <option value="@item.Id" selected>@item.ModuleName</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Id">@item.ModuleName</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" class="form-control validate" data-errmsg="please enter module count" value="@module.ModuleCount" name="LeadModules[@i].ModuleCount" />
+                                                        <input type="hidden" class="hdnIsActive" value="true" name="LeadModules[@i].IsActive" />
+                                                        <input type="hidden" name="Model[@i].Id" value="@module.Id" />
+                                                    </td>
+                                                    @*<td>
+                                <input type="text" class="form-control txtFromDate" data-errmsg="please enter module from date" name="LeadModules[@i].FromDate" value="@module.FromDate.ToAppFormat()" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control txtToDate" data-errmsg="please enter module to date" name="LeadModules[@i].ToDate" value="@module.ToDate.ToAppFormat()" />
+                            </td>*@
+                                                    <td style="text-align:center">
+                                                        <label class="label btnDeleteModule" style="color:red;">X</label>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <input type="button" value="+ Add Module" id="btnAddModule" />
+                            </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+
+
+
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:green;border-color: green;" class="btn btn-primary" id="btnSave" value="Save" />
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </section>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+
+    function pageloade() {
+        window.location = "/lead/list";
+        };
+
+        $(document).on("focusin", ".txtFromDate,.txtToDate", function () {
+            $(this).datepicker({ dateFormat: "dd-mm-yy" });
+        });
+
+    function fnSelectModule(ddlid,moduleid) {
+        $.getJSON("@Url.Action("GetModulesbasedonProduct", "ManageCommon",new { area = "Common" })?productid=" + $("#slProduct").val(), function (data) {
+            var option = '<option value="0">--Select--</option>';
+            $.each(data, function (index, item) {
+                if (moduleid != null && moduleid > 0 && item.Id == moduleid) {
+                    option += '<option value="' + item.Id + '" selected>' + item.ModuleName + '</option>';
+                }
+                else {
+                    option += '<option value="' + item.Id + '">' + item.ModuleName + '</option>';
+                }
+            });
+            $("#" + ddlid).html(option);
+        });
+    };
+
+    $("#btnAddModule").click(function () {
+        fnAddModule();
+    });
+
+    function fnAddModule() {
+        var trlength = $("#tblModule tbody tr").length;
+        $("#tblModule").append('<tr>' +
+            '<td>' +
+            '<select class="slModule form-control validate" data-errmsg="please select module name" id="slModule_' + trlength + '" name="LeadModules[' + trlength + '].ModuleId">' +
+            '    <option value="0">--Select--</option>' +
+            '</select>' +
+            '        </td>' +
+            '<td>' +
+            '    <input type="number" class="form-control validate" data-errmsg="please enter module count" name="LeadModules[' + trlength + '].ModuleCount" />' +
+            '<input type="hidden" class="hdnIsActive" value="true" name="LeadModules[' + trlength + '].IsActive" />' +
+            '</td>' +
+            //'<td><input type="text" class="form-control txtFromDate" data-errmsg="please enter module from date" name="LeadModules[' + trlength + '].FromDate" /></td>' +
+            //'<td><input type="text" class="form-control txtToDate" data-errmsg="please enter module to date" data-todate=""   name="LeadModules[' + trlength + '].ToDate" /></td>' +
+            '<td style="text-align:center">' +
+            '    <label class="label btnDeleteModule" style="color:red;">X</label>' +
+            '</td>' +
+            '    </tr>');
+        fnSelectModule("slModule_" + trlength, null);
+        $(document).on("focusin", ".txtFromDate,.txtToDate", function () {
+            $(this).datepicker({ dateFormat: "dd-mm-yy" });
+        });
+    };
+
+    $(document).on("click", ".btnDeleteModule", function () {
+        $(this).closest("tr").find(".hdnIsActive").val(false);
+        $(this).closest("tr").hide();
+    });
+
+    $("#btnSave").click(function () {
+        var customer = $("#slCustomer").val();
+        var date = $("#txtCustomerDate").val();
+        var product = $("#slProduct").val();
+
+
+
+        if (customer == "0") {
+            Warning("Please select customer");
+            return false;
+        }
+        if (fnIsNullorEmpty(date)) {
+            Warning("Please enter date");
+            return false;
+        }
+
+        if (product == "0") {
+            Warning("Please select product");
+            return false;
+        }
+
+        var isvalid = true; var errmsg;
+        debugger;
+        $(".validate").each(function () {
+            debugger;
+            if ($(this).closest("tr").find(".hdnIsActive").val() == "true") {
+                if ($(this).val() == 0 || $(this).val() == "") {
+                    errmsg = $(this).attr("data-errmsg");
+                    isvalid = false;
+                    return false;
+                }
+            }
+        });
+        if (isvalid == false) {
+            Warning(errmsg);
+            return false;
+        }
+
+
+        Confirmation("Are you sure, you want to save?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#frmLead").submit();
+        });
+    });
+</script>
+
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+
+    var v = document.getElementById("Leadssnew");
+    v.className += "tabcolor";
+</script>

@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ph12491590492_PartnerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActivityLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityDetails" Type="varchar" MaxLength="512" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="FullName" Type="varchar" MaxLength="256" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="RoleName" Type="varchar" MaxLength="256" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ActivityCategory" Type="varchar" MaxLength="32" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Attachment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="varchar" MaxLength="256" />
+    <Property Name="FileType" Type="varchar" MaxLength="128" />
+    <Property Name="FileCategory" Type="varchar" MaxLength="32" />
+    <Property Name="RelativePath" Type="varchar" MaxLength="512" />
+    <Property Name="ObjectId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="CountryName" Type="varchar" MaxLength="256" />
+    <Property Name="CityName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="EmailId" Type="varchar" MaxLength="256" />
+    <Property Name="Branch" Type="varchar" MaxLength="256" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="CountryName" Type="varchar" MaxLength="256" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="CityName" Type="varchar" MaxLength="256" />
+    <Property Name="Zip" Type="varchar" MaxLength="32" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CustomerActivationLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="DistributorId" Type="int" />
+    <Property Name="DistributorName" Type="varchar" MaxLength="256" />
+    <Property Name="ActivationDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DistributorPartner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DistributorId" Type="int" />
+    <Property Name="DistributorName" Type="varchar" MaxLength="256" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocumentName" Type="varchar" MaxLength="256" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="256" />
+    <Property Name="Version" Type="varchar" MaxLength="8" />
+    <Property Name="Notes" Type="varchar" MaxLength="512" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="CustomerDate" Type="varchar" MaxLength="32" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="LeadDescription" Type="varchar" MaxLength="512" />
+    <Property Name="TotalModuleAmount" Type="int" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="256" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="256" />
+    <Property Name="IsConvertedtoPoc" Type="bit" />
+  </EntityType>
+  <EntityType Name="LeadModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LeadId" Type="int" />
+    <Property Name="ModuleId" Type="int" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleCount" Type="int" />
+    <Property Name="ModuleAmount" Type="int" />
+    <Property Name="FromDate" Type="date" />
+    <Property Name="ToDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Licensing">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="PoId" Type="int" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleId" Type="int" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleCount" Type="int" />
+    <Property Name="ModuleAmount" Type="int" />
+    <Property Name="FromDate" Type="date" />
+    <Property Name="ToDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="LicenseStatus" Type="varchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="256" />
+    <Property Name="ModulePrice" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Po">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="PODate" Type="varchar" MaxLength="32" />
+    <Property Name="PocId" Type="int" />
+    <Property Name="PocName" Type="varchar" MaxLength="256" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="QualifiedDomainName" Type="varchar" MaxLength="256" />
+    <Property Name="PublicIp" Type="varchar" MaxLength="32" />
+    <Property Name="PODescription" Type="varchar" MaxLength="512" />
+    <Property Name="TotalModuleAmount" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="32" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="256" />
+    <Property Name="TechContPersonNameOne" Type="varchar" MaxLength="256" />
+    <Property Name="TechContPersonEmailOne" Type="varchar" MaxLength="256" />
+    <Property Name="TechContPersonPhoneOne" Type="varchar" MaxLength="32" />
+    <Property Name="TechContPersonNameTwo" Type="varchar" MaxLength="256" />
+    <Property Name="TechContPersonEmailTwo" Type="varchar" MaxLength="256" />
+    <Property Name="TechContPersonPhoneTwo" Type="varchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Poc">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" />
+    <Property Name="POCDate" Type="varchar" MaxLength="32" />
+    <Property Name="LeadId" Type="int" />
+    <Property Name="LeadName" Type="varchar" MaxLength="256" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="PartnerId" Type="int" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="256" />
+    <Property Name="QualifiedDomainName" Type="varchar" MaxLength="256" />
+    <Property Name="PublicIp" Type="varchar" MaxLength="64" />
+    <Property Name="Description" Type="varchar" MaxLength="512" />
+    <Property Name="IsConvertedtoPo" Type="bit" />
+    <Property Name="TotalModuleAmount" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="32" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="PocModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PocId" Type="int" />
+    <Property Name="ModuleId" Type="int" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleCount" Type="int" />
+    <Property Name="ModuleAmount" Type="int" />
+    <Property Name="FromDate" Type="date" />
+    <Property Name="ToDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PoModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PoId" Type="int" />
+    <Property Name="ModuleId" Type="int" />
+    <Property Name="ModuleName" Type="varchar" MaxLength="256" />
+    <Property Name="ModuleCount" Type="int" />
+    <Property Name="ModuleAmount" Type="varchar" MaxLength="32" />
+    <Property Name="FromDate" Type="date" />
+    <Property Name="ToDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="256" />
+    <Property Name="FullName" Type="varchar" MaxLength="256" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="64" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="CountryName" Type="varchar" MaxLength="256" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="CityName" Type="varchar" MaxLength="256" />
+    <Property Name="FullAddress" Type="varchar" MaxLength="1024" />
+    <Property Name="GSTNumber" Type="varchar" MaxLength="64" />
+    <Property Name="AlternatePerson" Type="varchar" MaxLength="256" />
+    <Property Name="AlternateContact" Type="varchar" MaxLength="64" />
+    <Property Name="EmailId" Type="varchar" MaxLength="256" />
+    <Property Name="Password" Type="varchar" MaxLength="64" />
+    <Property Name="ServiceAreaDescription" Type="varchar" MaxLength="512" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="RoleName" Type="varchar" MaxLength="256" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="ApprovedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ZipUpload">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ZipFileName" Type="varchar" MaxLength="256" />
+    <Property Name="VersionNumber" Type="varchar" MaxLength="8" />
+    <Property Name="Notes" Type="varchar" MaxLength="512" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ChangedBy" Type="int" />
+    <Property Name="ChangedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="ph12491590492_PartnerModelStoreContainer">
+    <EntitySet Name="ActivityLog" EntityType="Self.ActivityLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerActivationLog" EntityType="Self.CustomerActivationLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DistributorPartner" EntityType="Self.DistributorPartner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lead" EntityType="Self.Lead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LeadModule" EntityType="Self.LeadModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Licensing" EntityType="Self.Licensing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Po" EntityType="Self.Po" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Poc" EntityType="Self.Poc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PocModule" EntityType="Self.PocModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PoModule" EntityType="Self.PoModule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ZipUpload" EntityType="Self.ZipUpload" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

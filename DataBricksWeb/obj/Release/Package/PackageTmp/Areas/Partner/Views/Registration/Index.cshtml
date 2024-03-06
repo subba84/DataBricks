@@ -1,0 +1,337 @@
+﻿@using CaptchaMvc.HtmlHelpers;
+@using CaptchaMvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Registration
+
+    </h1>
+</section>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery.password-validation.js"></script>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","Registration",new { area = "Partner"})" enctype="multipart/form-data" id="frmRegister">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Your Company <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtCompany" name="CompanyName" maxlength="256" placeholder="Your Company" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Your Name<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtFullname" name="FullName" maxlength="256" placeholder="Your Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtPhone" name="PhoneNumber" maxlength="64" placeholder="Phone" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>GST Number<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtGSTNumber" name="GSTNumber" maxlength="128" placeholder="GST Number" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Country<span style="color:red;">*</span></label>
+                                <select class="form-control" id="slCountry" name="CountryId">
+                                    <option value="0">--Select--</option>
+                                    @if (DataCache.Countries != null && DataCache.Countries.Count > 0)
+                                    {
+                                        foreach (var country in DataCache.Countries)
+                                        {
+                                            <option value="@country.Id">@country.CountryName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>City<span style="color:red;">*</span></label>
+                                <select class="form-control" id="slCity" name="CityId">
+                                    <option value="0">--Select--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address<span style="color:red;">*</span></label>
+                                <textarea class="form-control" id="txtAddress" placeholder="Address" rows="3" maxlength="512" name="FullAddress"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Alternate Person<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtAlternatePerson" name="AlternatePerson" placeholder="Alternate Person" maxlength="256" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Alternate Contact<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtAlternateContact" name="AlternateContact" placeholder="Alternate Contact" maxlength="256" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Id<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtEmailId" name="EmailId" placeholder="Email Id" maxlength="256" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Password<span style="color:red;">*</span></label>
+                                <input type="password" class="form-control" id="txtPassword" name="Password" placeholder="Password" maxlength="128" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Confirm Password<span style="color:red;">*</span></label>
+                                <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Confirm Password" maxlength="128" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Service area , Branch Office<span style="color:red;">*</span></label>
+                                <textarea class="form-control" rows="3" id="txtServiceArea" name="ServiceAreaDescription" maxlength="512"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Upload Business Card<span style="color:red;">*</span></label>
+                                <input type="file" name="flBusinessCard" id="flBusinessCard" accept=".pdf" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <img src="@Url.Action("GetCaptchaImage","Registration",new { area = "Partner"})" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="txtCaptchaText" maxlength="5" style="height: 50px;" placeholder="Please Enter Captcha " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:#276235;border-color: #276235;" class="btn btn-primary" id="btnRegister" value="Register" />
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </section>
+</div>
+
+<script>
+    function pageloade() {
+        window.location = "/login/index";
+    }
+
+    $("#slCountry").change(function () {
+        $.getJSON("@Url.Action("GetCitiesbasedonCountryId","Registration",new { area = "Partner"})?countryId=" + $(this).val(), function (data) {
+            var optionHTML = '<option value="0">--Select--</option>';
+            $.each(data, function (index, item) {
+                optionHTML+= '<option value="'+item.Id+'">'+item.CityName+'</option>';
+            });
+            $("#slCity").html(optionHTML);
+        });
+    });
+
+    $("#btnRegister").click(function () {
+        var companyname = $("#txtCompany").val();
+        var fullname = $("#txtFullname").val();
+        var phone = $("#txtPhone").val();
+        var gstnumber = $("#txtGSTNumber").val();
+        var country = $("#slCountry").val();
+        var city = $("#slCity").val();
+        var address = $("#txtAddress").val();
+        var alternateperson = $("#txtAlternatePerson").val();
+        var alternatecontact = $("#txtAlternateContact").val();
+        var email = $("#txtEmailId").val();
+        var password = $("#txtPassword").val();
+        var confirmpassword = $("#txtConfirmPassword").val();
+        var serviceareadescription = $("#txtServiceArea").val();
+        var businesscard = $("#flBusinessCard").val();
+        var captchatext = $("#txtCaptchaText").val();
+
+        if (fnIsNullorEmpty(companyname)) {
+            Warning("Please enter your company name");
+            return false;
+        }
+        if (fnIsNullorEmpty(fullname)) {
+            Warning("Please enter your full name");
+            return false;
+        }
+        if (fnIsNullorEmpty(phone)) {
+            Warning("Please enter phone number");
+            return false;
+        }
+        if (fnIsNullorEmpty(gstnumber)) {
+            Warning("Please enter gst number");
+            return false;
+        }
+        if (country == "0") {
+            Warning("Please select country");
+            return false;
+        }
+        if (city == "0") {
+            Warning("Please select city");
+            return false;
+        }
+        if (fnIsNullorEmpty(address)) {
+            Warning("Please enter address");
+            return false;
+        }
+        if (fnIsNullorEmpty(alternateperson)) {
+            Warning("Please enter alternate person");
+            return false;
+        }
+        if (fnIsNullorEmpty(alternatecontact)) {
+            Warning("Please enter alternate contact");
+            return false;
+        }
+        if (fnIsNullorEmpty(email)) {
+            Warning("Please enter email");
+            return false;
+        }
+        if (fnIsNullorEmpty(password)) {
+            Warning("Please enter password");
+            return false;
+        }
+        if (fnIsNullorEmpty(confirmpassword)) {
+            Warning("Please enter confirm password");
+            return false;
+        }
+        if (password != confirmpassword) {
+            Warning("Passwords are not matching");
+            return false;
+        }
+        if (fnIsNullorEmpty(serviceareadescription)) {
+            Warning("Please enter service area description");
+            return false;
+        }
+        if (fnIsNullorEmpty(businesscard)) {
+            Warning("Please upload business card");
+            return false;
+        }
+        if (fnIsNullorEmpty(captchatext)) {
+            Warning("Please enter captcha");
+            return false;
+        }
+
+        if (captchatext != "@Convert.ToString(Session["CaptchaString"])") {
+            Warning("Captcha Incorrect. Please enter correct captcha");
+            return false;
+        }
+
+        var isnotvalidpwd = false;
+        $("#txtPassword").passwordValidation({ "confirmField": "#txtConfirmPassword" }, function (element, valid, match, failedCases) {
+
+            if (valid)
+            {
+                $(element).css("border", "2px solid green");
+            }
+            if (valid && match)
+            {
+                $("#txtConfirmPassword").css("border", "2px solid green");
+            }
+            if (!valid)
+            {
+                $(element).css("border", "2px solid red");
+            }
+
+            if (!valid || !match)
+            {
+                $("#txtConfirmPassword").css("border", "2px solid red");
+            }
+            if (failedCases != null && failedCases.length > 0) {
+                Alert(failedCases.join("<br/>"));
+            }
+            else {
+                isnotvalidpwd = true;
+            }
+
+            if (isnotvalidpwd == true) {
+                fnFormSubmit();
+            }
+        });
+        debugger;
+
+
+
+
+
+
+
+
+    });
+
+    function fnFormSubmit() {
+        Confirmation("Are you sure, you want to register?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#frmRegister").submit();
+        });
+    };
+</script>
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+</script>

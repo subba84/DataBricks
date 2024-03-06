@@ -1,0 +1,207 @@
+﻿@model DataBricksWeb.Database.Customer
+@{
+    ViewBag.Title = "Edit";
+
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Customer
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/customer/list">Customer List</a></li>
+        <li class="active">Customer</li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","ManageCustomer",new { area = "Customer"})" enctype="multipart/form-data" id="frmCustomer">
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Customer Name <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtCustomerName" value="@Model.CustomerName" name="CustomerName" maxlength="256" placeholder="Customer Name" />
+                                <input type="hidden" value="@Model.Id" name="Id" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Branch<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtBranch" name="Branch" value="@Model.Branch" maxlength="256" placeholder="Branch" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Id<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" id="txtEmail" name="EmailId" value="@Model.EmailId" maxlength="256" placeholder="Email" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Country<span style="color:red;">*</span></label>
+                                <select class="form-control" id="slCountry" name="CountryId">
+                                    <option value="0">--Select--</option>
+                                    @if (DataCache.Countries != null && DataCache.Countries.Count > 0)
+                                    {
+                                        foreach (var country in DataCache.Countries)
+                                        {
+                                            if (country.Id == Model.CountryId)
+                                            {
+                                                <option value="@country.Id" selected>@country.CountryName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@country.Id">@country.CountryName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>City<span style="color:red;">*</span></label>
+                                <select class="form-control" id="slCity" name="CityId">
+                                    @if (DataCache.Cities != null && DataCache.Cities.Count > 0)
+                                    {
+                                        foreach (var city in DataCache.Cities.Where(x => x.CountryId == Model.CountryId).ToList())
+                                        {
+                                            if (city.Id == Model.CityId)
+                                            {
+                                                <option value="@city.Id" selected>@city.CityName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@city.Id">@city.CityName</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Zip<span style="color:red;">*</span></label>
+                                <input type="number" class="form-control" value="@Model.Zip" id="txtZip" name="Zip" maxlength="64" placeholder="Zip" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:green;border-color: green;" class="btn btn-primary" id="btnSave" value="Save" />
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+
+                @*<div class="box-footer">
+                        <input type="button" class="btn btn-primary" id="btnSave" value="Save" />
+                    </div>*@
+            </form>
+        </div>
+
+
+    </section>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/CustomScript.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script>
+    function pageloade() {
+        window.location = "/dashboard/landingpage";
+    }
+
+    $("#slCountry").change(function () {
+        $.getJSON("@Url.Action("GetCitiesbasedonCountryId","Registration",new { area = "Partner"})?countryId=" + $(this).val(), function (data) {
+            var optionHTML = '<option value="0">--Select--</option>';
+            $.each(data, function (index, item) {
+                optionHTML += '<option value="' + item.Id + '">' + item.CityName + '</option>';
+            });
+            $("#slCity").html(optionHTML);
+        });
+    });
+
+    $("#btnSave").click(function () {
+        var customername = $("#txtCustomerName").val();
+        var email = $("#txtEmail").val();
+        var branch = $("#txtBranch").val();
+        var country = $("#slCountry").val();
+        var city = $("#slCity").val();
+        var zip = $("#txtZip").val();
+
+        if (fnIsNullorEmpty(customername)) {
+            Warning("Please enter customer name");
+            return false;
+        }
+        if (fnIsNullorEmpty(email)) {
+            Warning("Please enter customer email id");
+            return false;
+        }
+        if (fnIsNullorEmpty(branch)) {
+            Warning("Please enter branch name");
+            return false;
+        }
+
+        if (country == "0") {
+            Warning("Please select country");
+            return false;
+        }
+        if (city == "0") {
+            Warning("Please select city");
+            return false;
+        }
+        if (fnIsNullorEmpty(zip)) {
+            Warning("Please enter zip");
+            return false;
+        }
+
+        Confirmation("Are you sure, you want to save?");
+        $("#btnConfirm").unbind().click(function () {
+            $("#frmCustomer").submit();
+        });
+    });
+</script>
+
+<script>
+    window.setInterval('refresh()', 1000);
+    function refresh() {
+        document.getElementById("newloader").style.display = 'none';
+        document.getElementById("tablehide").style.display = 'block';
+    }
+    var v = document.getElementById("Customersnew");
+    v.className += "tabcolor";
+</script>

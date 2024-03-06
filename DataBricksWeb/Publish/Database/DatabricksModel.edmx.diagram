@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9f71ffdb124744bab02d4d961739a8ca" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="DatabricksModel.ActivityLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Attachment" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.City" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Country" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Customer" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DatabricksModel.CustomerActivationLog" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DatabricksModel.DistributorPartner" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Document" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Lead" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.LeadModule" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Licensing" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Module" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Po" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Poc" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DatabricksModel.PocModule" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DatabricksModel.PoModule" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Product" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabricksModel.Role" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DatabricksModel.User" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DatabricksModel.ZipUpload" Width="1.5" PointX="8.75" PointY="12.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

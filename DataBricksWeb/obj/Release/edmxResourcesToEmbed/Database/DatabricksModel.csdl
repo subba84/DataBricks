@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ph12491590492_PartnerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ActivityLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityDetails" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ActivityCategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Attachment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="FileType" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="FileCategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="RelativePath" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="ObjectId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="CountryName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CityName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="Branch" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="CountryName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="CityName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="Zip" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CustomerActivationLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="DistributorId" Type="Int32" />
+    <Property Name="DistributorName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ActivationDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="DistributorPartner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistributorId" Type="Int32" />
+    <Property Name="DistributorName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocumentName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentType" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="Version" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerDate" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="LeadDescription" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="TotalModuleAmount" Type="Int32" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsConvertedtoPoc" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="LeadModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadId" Type="Int32" />
+    <Property Name="ModuleId" Type="Int32" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleCount" Type="Int32" />
+    <Property Name="ModuleAmount" Type="Int32" />
+    <Property Name="FromDate" Type="DateTime" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Licensing">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PoId" Type="Int32" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleId" Type="Int32" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleCount" Type="Int32" />
+    <Property Name="ModuleAmount" Type="Int32" />
+    <Property Name="FromDate" Type="DateTime" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="LicenseStatus" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModulePrice" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Po">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PODate" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="PocId" Type="Int32" />
+    <Property Name="PocName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="QualifiedDomainName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PublicIp" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="PODescription" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="TotalModuleAmount" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonNameOne" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonEmailOne" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonPhoneOne" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonNameTwo" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonEmailTwo" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="TechContPersonPhoneTwo" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Poc">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="POCDate" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="LeadId" Type="Int32" />
+    <Property Name="LeadName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PartnerId" Type="Int32" />
+    <Property Name="PartnerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="QualifiedDomainName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PublicIp" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="IsConvertedtoPo" Type="Boolean" />
+    <Property Name="TotalModuleAmount" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PocModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PocId" Type="Int32" />
+    <Property Name="ModuleId" Type="Int32" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleCount" Type="Int32" />
+    <Property Name="ModuleAmount" Type="Int32" />
+    <Property Name="FromDate" Type="DateTime" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PoModule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PoId" Type="Int32" />
+    <Property Name="ModuleId" Type="Int32" />
+    <Property Name="ModuleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleCount" Type="Int32" />
+    <Property Name="ModuleAmount" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="FromDate" Type="DateTime" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="FullName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="CountryName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="CityName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="FullAddress" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="GSTNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="AlternatePerson" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="AlternateContact" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceAreaDescription" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="ApprovedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ZipUpload">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ZipFileName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="VersionNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="ChangedBy" Type="Int32" />
+    <Property Name="ChangedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ActivityLogs" EntityType="Self.ActivityLog" />
+    <EntitySet Name="Attachments" EntityType="Self.Attachment" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="CustomerActivationLogs" EntityType="Self.CustomerActivationLog" />
+    <EntitySet Name="DistributorPartners" EntityType="Self.DistributorPartner" />
+    <EntitySet Name="Documents" EntityType="Self.Document" />
+    <EntitySet Name="Leads" EntityType="Self.Lead" />
+    <EntitySet Name="LeadModules" EntityType="Self.LeadModule" />
+    <EntitySet Name="Licensings" EntityType="Self.Licensing" />
+    <EntitySet Name="Modules" EntityType="Self.Module" />
+    <EntitySet Name="Poes" EntityType="Self.Po" />
+    <EntitySet Name="Pocs" EntityType="Self.Poc" />
+    <EntitySet Name="PocModules" EntityType="Self.PocModule" />
+    <EntitySet Name="PoModules" EntityType="Self.PoModule" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="ZipUploads" EntityType="Self.ZipUpload" />
+  </EntityContainer>
+</Schema>

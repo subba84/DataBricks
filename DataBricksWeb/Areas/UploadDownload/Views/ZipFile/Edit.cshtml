@@ -1,0 +1,131 @@
+﻿@model DataBricksWeb.Database.ZipUpload
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Poc
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/dashboard/landingpage"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/zip/list">Zip Uploads List</a></li>
+        <li><a href="#">Zip Upload</a></li>
+    </ol>
+</section>
+<div id="newloader">
+    <section class="content">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <img style="width: 30%;margin-left: 100px;margin-top: 55px;" src="~/NewAdmin/dist/img/loading-waiting.gif" class="img-circle" alt="User Image">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main content -->
+<div id="tablehide" style="display:none;">
+    <section class="content">
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Zip Upload</h3>
+            </div>
+            <!-- /.box-header -->
+            <form method="post" action="@Url.Action("Edit","ZipFile",new { area = "UploadDownload"})" enctype="multipart/form-data" id="frmZip">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Upload Zip <span style="color:red;">*</span></label>
+                                <input type="file" class="form-control" name="zip" accept="*" id="flZip" />
+                                <input type="hidden" value="@Model.Id" name="Id" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Version<span style="color:red;">*</span></label>
+                                <input type="number" class="form-control" id="txtVersion" name="VersionNumber" placeholder="Version" value="@Model.VersionNumber" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Notes<span style="color:red;">*</span></label>
+                            <textarea class="form-control" id="txtNotes" maxlength="512" placeholder="Notes" name="Notes">@Model.Notes</textarea>
+                        </div>
+                        <div class="col-md-6" style="display:none">
+                            <label>IsActive</label>
+                            <input type="checkbox" value="true" name="IsActive" checked />
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="col-lg-12 p-t-20 text-center">
+                        <input type="button" style="background-color:green;border-color: green;" class="btn btn-primary" id="btnSave" value="Save" />
+                        <button type="button" onclick="pageloade();" style="background-color: #dc3545; border-color: #dc3545;margin-left: 10px;" class="btn btn-primary float-center">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/CustomScript.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+        function pageloade() {
+            window.location = "/zip/list";
+        }
+
+
+        $("#btnSave").click(function () {
+            var file = $("#flZip").val();
+            var version = $("#txtVersion").val();
+            var notes = $("#txtNotes").val();
+
+            if (file.length == "0" || file == "") {
+                Warning("Please upload file");
+                return false;
+            }
+            if (fnIsNullorEmpty(version)) {
+                Warning("Please enter version");
+                return false;
+            }
+
+            if (fnIsNullorEmpty(notes)) {
+                Warning("Please enter version");
+                return false;
+            }
+
+            Confirmation("Are you sure, you want to save?");
+            $("#btnConfirm").unbind().click(function () {
+                $("#frmZip").submit();
+            });
+        });
+    </script>
+
+    <script>
+        window.setInterval('refresh()', 1000);
+        function refresh() {
+            document.getElementById("newloader").style.display = 'none';
+            document.getElementById("tablehide").style.display = 'block';
+        }
+
+        
+        var v = document.getElementById("Downloadsnew");
+        v.className += "tabcolor";
+    </script>
